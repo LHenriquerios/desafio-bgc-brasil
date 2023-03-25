@@ -2,7 +2,7 @@ service: desafio-bgc-brasil
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs16.x
   region: us-east-2
 
 functions:
@@ -11,5 +11,13 @@ functions:
     events:
       - http:
           path: /
+          method: GET
+          cors: true
+
+  getProductData:
+    handler: handler.getProductData
+    events:
+      - http:
+          path: /product-data
           method: GET
           cors: true
