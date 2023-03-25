@@ -77,6 +77,12 @@
         "LogGroupName": "/aws/lambda/desafio-bgc-brasil-dev-hello"
       }
     },
+    "GetProductDataLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/desafio-bgc-brasil-dev-getProductData"
+      }
+    },
     "IamRoleLambdaExecution": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -162,10 +168,10 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/desafio-bgc-brasil/dev/1679747414357-2023-03-25T12:30:14.357Z/desafio-bgc-brasil.zip"
+          "S3Key": "serverless/desafio-bgc-brasil/dev/1679750356793-2023-03-25T13:19:16.793Z/desafio-bgc-brasil.zip"
         },
         "Handler": "handler.hello",
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs16.x",
         "FunctionName": "desafio-bgc-brasil-dev-hello",
         "MemorySize": 1024,
         "Timeout": 6,
@@ -180,14 +186,49 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersionZDyTEZjKUVTn9wWNmh1QzkfNzf3vCBT0Sa8KtxWKQ": {
+    "GetProductDataLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/desafio-bgc-brasil/dev/1679750356793-2023-03-25T13:19:16.793Z/desafio-bgc-brasil.zip"
+        },
+        "Handler": "handler.getProductData",
+        "Runtime": "nodejs16.x",
+        "FunctionName": "desafio-bgc-brasil-dev-getProductData",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "GetProductDataLogGroup"
+      ]
+    },
+    "HelloLambdaVersion3xTxTDD0v7IJ45wHTuxGc7C9NDVPPTZdF6fTzPqRYg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "7UnSE3q+jfwQipCdnIDiw+xaLiR34GkblQBvzuTGsrg="
+        "CodeSha256": "D+OQtTKFu+V9ppnBD5IsISRJdLJwNCEDW561RXaJlvc="
+      }
+    },
+    "GetProductDataLambdaVersionXPYUVh6yqrk4huBm9sVwe81KpP2zvB9i7KmRt02LpU": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetProductDataLambdaFunction"
+        },
+        "CodeSha256": "D+OQtTKFu+V9ppnBD5IsISRJdLJwNCEDW561RXaJlvc="
       }
     },
     "ApiGatewayRestApi": {
@@ -200,6 +241,21 @@
           ]
         },
         "Policy": ""
+      }
+    },
+    "ApiGatewayResourceProductDashdata": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "product-data",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
       }
     },
     "ApiGatewayMethodOptions": {
@@ -244,6 +300,51 @@
             "ApiGatewayRestApi",
             "RootResourceId"
           ]
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
+    "ApiGatewayMethodProductDashdataOptions": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+              },
+              "ResponseTemplates": {
+                "application/json": ""
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceProductDashdata"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -299,7 +400,53 @@
         "HelloLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1679747412000": {
+    "ApiGatewayMethodProductDashdataGet": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "RequestParameters": {},
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceProductDashdata"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        },
+        "ApiKeyRequired": false,
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "GetProductDataLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        },
+        "MethodResponses": []
+      },
+      "DependsOn": [
+        "GetProductDataLambdaPermissionApiGateway"
+      ]
+    },
+    "ApiGatewayDeployment1679750354504": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -309,7 +456,9 @@
       },
       "DependsOn": [
         "ApiGatewayMethodOptions",
-        "ApiGatewayMethodGet"
+        "ApiGatewayMethodProductDashdataOptions",
+        "ApiGatewayMethodGet",
+        "ApiGatewayMethodProductDashdataGet"
       ]
     },
     "HelloLambdaPermissionApiGateway": {
@@ -318,6 +467,43 @@
         "FunctionName": {
           "Fn::GetAtt": [
             "HelloLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region"
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":",
+              {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "/*/*"
+            ]
+          ]
+        }
+      }
+    },
+    "GetProductDataLambdaPermissionApiGateway": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "GetProductDataLambdaFunction",
             "Arn"
           ]
         },
@@ -362,10 +548,19 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionZDyTEZjKUVTn9wWNmh1QzkfNzf3vCBT0Sa8KtxWKQ"
+        "Ref": "HelloLambdaVersion3xTxTDD0v7IJ45wHTuxGc7C9NDVPPTZdF6fTzPqRYg"
       },
       "Export": {
         "Name": "sls-desafio-bgc-brasil-dev-HelloLambdaFunctionQualifiedArn"
+      }
+    },
+    "GetProductDataLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetProductDataLambdaVersionXPYUVh6yqrk4huBm9sVwe81KpP2zvB9i7KmRt02LpU"
+      },
+      "Export": {
+        "Name": "sls-desafio-bgc-brasil-dev-GetProductDataLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {
