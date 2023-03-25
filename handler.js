@@ -21,7 +21,9 @@ module.exports.hello = async (event) => {
 module.exports.getProductData = async (event) => {
   const url = 'https://www.amazon.com.br/bestsellers';
 
-  const browser = await puppeteer.launch();
+  const browser = await chromium.puppeteer.launch({
+    executablePath: await chromium.executablePath,
+  });
   const page = await browser.newPage();
   await page.goto(url);
 

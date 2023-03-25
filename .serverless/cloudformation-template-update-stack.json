@@ -168,7 +168,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/desafio-bgc-brasil/dev/1679750356793-2023-03-25T13:19:16.793Z/desafio-bgc-brasil.zip"
+          "S3Key": "serverless/desafio-bgc-brasil/dev/1679752217056-2023-03-25T13:50:17.056Z/desafio-bgc-brasil.zip"
         },
         "Handler": "handler.hello",
         "Runtime": "nodejs16.x",
@@ -193,7 +193,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/desafio-bgc-brasil/dev/1679750356793-2023-03-25T13:19:16.793Z/desafio-bgc-brasil.zip"
+          "S3Key": "serverless/desafio-bgc-brasil/dev/1679752217056-2023-03-25T13:50:17.056Z/desafio-bgc-brasil.zip"
         },
         "Handler": "handler.getProductData",
         "Runtime": "nodejs16.x",
@@ -211,24 +211,24 @@
         "GetProductDataLogGroup"
       ]
     },
-    "HelloLambdaVersion3xTxTDD0v7IJ45wHTuxGc7C9NDVPPTZdF6fTzPqRYg": {
+    "HelloLambdaVersionvtUUZKmeLpNMiKevsAZO5xSRU8V94JKOsTB7HAUTJjs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "D+OQtTKFu+V9ppnBD5IsISRJdLJwNCEDW561RXaJlvc="
+        "CodeSha256": "URSmhK8EGp2XLLHUYkD8OHq/J+ReHMlfb8LLtmK/LoU="
       }
     },
-    "GetProductDataLambdaVersionXPYUVh6yqrk4huBm9sVwe81KpP2zvB9i7KmRt02LpU": {
+    "GetProductDataLambdaVersionKei2Z45AB8EW4eqUoHBEOTU3PhcASEqhu1kLVJxeM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetProductDataLambdaFunction"
         },
-        "CodeSha256": "D+OQtTKFu+V9ppnBD5IsISRJdLJwNCEDW561RXaJlvc="
+        "CodeSha256": "URSmhK8EGp2XLLHUYkD8OHq/J+ReHMlfb8LLtmK/LoU="
       }
     },
     "ApiGatewayRestApi": {
@@ -446,7 +446,7 @@
         "GetProductDataLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1679750354504": {
+    "ApiGatewayDeployment1679752213962": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -548,7 +548,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersion3xTxTDD0v7IJ45wHTuxGc7C9NDVPPTZdF6fTzPqRYg"
+        "Ref": "HelloLambdaVersionvtUUZKmeLpNMiKevsAZO5xSRU8V94JKOsTB7HAUTJjs"
       },
       "Export": {
         "Name": "sls-desafio-bgc-brasil-dev-HelloLambdaFunctionQualifiedArn"
@@ -557,7 +557,7 @@
     "GetProductDataLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetProductDataLambdaVersionXPYUVh6yqrk4huBm9sVwe81KpP2zvB9i7KmRt02LpU"
+        "Ref": "GetProductDataLambdaVersionKei2Z45AB8EW4eqUoHBEOTU3PhcASEqhu1kLVJxeM"
       },
       "Export": {
         "Name": "sls-desafio-bgc-brasil-dev-GetProductDataLambdaFunctionQualifiedArn"
