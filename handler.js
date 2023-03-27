@@ -18,24 +18,33 @@ module.exports.hello = async (event) => {
 };
 
 
+puppeteer.use(stealthPlugin());
+
 module.exports.getProductData = async (event) => {
-  const url = 'https://www.amazon.com.br/bestsellers';
-
-  const browser = await chromium.puppeteer.launch({
-    executablePath: await chromium.executablePath,
-  });
+//    process.env.PUPPETEER_EXECUTABLE_PATH = chromium.executablePath;
+//   const browser = await puppeteerExtra.launch({
+//       args: chromium.args,
+//        defaultViewport: chromium.defaultViewport,
+//        executablePath: await chromium.executablePath(),
+//        headless: chromium.headless,
+//        ignoreHTTPSErrors: true,
+//      });
+const browser = await puppeteer.launch({
+  args: chromium.args,
+  defaultViewport: chromium.defaultViewport,
+  executablePath: await chromium.executablePath(),
+  headless: chromium.headless,
+  ignoreHTTPSErrors: true,
+});
   const page = await browser.newPage();
-  await page.goto(url);
+  await page.goto('https://www.amazon.com/gp/bestsellers/books/');
 
-  const result = {};
-  const categories = await page.$$eval('div#zg_tabs div#zg_centerListWrapper', (elements) => {
-    return elements.map((element) => element.querySelector('div.a-section h3.a-size-medium').textContent.trim());
-  });
+  const products = await page.waitForSelector('.zg-item-immersion');
 
   await browser.close();
 
   return {
     statusCode: 200,
-    body: JSON.stringify(categories),
+    body: JSON.stringify(products),
   };
 };

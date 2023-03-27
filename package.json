@@ -1,4 +1,22 @@
 {
+  "name": "desafio-bgc-brasil",
+  "description": "Um web scraper que busca os produtos mais vendidos da Amazon usando serviços da AWS, incluindo o AWS Lambda, o API Gateway e o Step Functions, para implantar minha aplicação.",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LHenriquerios/desafio-bgc-brasil.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LHenriquerios/desafio-bgc-brasil/issues"
+  },
+  "homepage": "https://github.com/LHenriquerios/desafio-bgc-brasil#readme",
   "dependencies": {
     "chrome-aws-lambda": "^10.1.0",
     "puppeteer": "^19.8.0",
