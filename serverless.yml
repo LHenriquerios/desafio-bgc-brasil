@@ -2,7 +2,7 @@ service: desafio-bgc-brasil
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs14.x
   region: us-east-2
 
 functions:

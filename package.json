@@ -19,7 +19,6 @@
   "homepage": "https://github.com/LHenriquerios/desafio-bgc-brasil#readme",
   "dependencies": {
     "chrome-aws-lambda": "^10.1.0",
-    "puppeteer": "^19.8.0",
-    "puppeteer-core": "^19.8.0"
+    "puppeteer-core": "^10.0.0"
   }
 }
