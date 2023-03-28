@@ -6,18 +6,10 @@ provider:
   region: us-east-2
 
 functions:
-  hello:
-    handler: handler.hello
+  bestsellers:
+    handler: handler.bestsellers
     events:
       - http:
-          path: /
-          method: GET
-          cors: true
-
-  getProductData:
-    handler: handler.getProductData
-    events:
-      - http:
-          path: /product-data
+          path: /bestsellers
           method: GET
           cors: true

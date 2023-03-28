@@ -1,14 +1,7 @@
 const chromium = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
 
-exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: 'Hello World!' })
-};
-}
-
-exports.getProductData = async (event, context) => {
+exports.bestsellers = async (event, context) => {
   const executablePath = await chromium.executablePath;
   const browser = await puppeteer.launch({
     args: chromium.args,
@@ -27,7 +20,8 @@ exports.getProductData = async (event, context) => {
     const product = {};
     product.title =  document.querySelectorAll('.p13n-sc-truncate-desktop-type2')[i].innerText;
     product.price = document.querySelectorAll('.a-size-base.a-color-price')[i].innerText;
-    product.link =  document.querySelectorAll('.a-link-normal')[i+1].href;
+    product.rating = document.querySelectorAll('.a-icon-row')[i].innerText;
+    product.url =  document.querySelectorAll('.a-link-normal')[i+1].href;
     
     products.push(product);
     };
